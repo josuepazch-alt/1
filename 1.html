@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Interfaz Dinámica</title>
+    <style>
+        /* Reseteo y estilos base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            overflow-x: hidden; /* Evita barras de desplazamiento horizontales */
+        }
+
+        /* Contenedor principal */
+        .container {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2.5rem 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            transition: opacity 0.4s ease; /* Transición suave para ocultar el contenedor */
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        /* Estilo del botón */
+        .btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 0.9rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 0.6rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            -webkit-tap-highlight-color: transparent;
+            display: block; /* Necesario para que funcione bien el ocultamiento */
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Estilos para ocultar elementos */
+        .hidden {
+            display: none !important;
+            opacity: 0 !important;
+        }
+
+        .fade-out {
+             opacity: 0 !important;
+             pointer-events: none;
+        }
+
+
+        /* Estilo del mensaje grande */
+        #mensajeGrande {
+            position: fixed; /* Fijo en la pantalla */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.95); /* Fondo semitransparente oscuro */
+            color: #f43f5e;
+            font-size: 15vw; /* Tamaño de fuente relativo al ancho de la pantalla (muy grande) */
+            font-weight: 800;
+            text-align: center;
+            padding: 2rem;
+            opacity: 0;
+            pointer-events: none; /* Evita que el texto bloquee clics antes de aparecer */
+            transition: opacity 0.5s ease;
+            z-index: 100; /* Asegura que esté por encima de todo */
+            word-break: break-word; /* Permite saltos de línea si es necesario */
+        }
+
+        #mensajeGrande.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Contenedor inicial que contiene el título y el botón -->
+    <div class="container" id="contenedorPrincipal">
+        <h1>Interfaz Interactiva</h1>
+        <button class="btn" id="miBoton">Presiona aqui</button>
+    </div>
+
+    <!-- Elemento oculto que contendrá el mensaje grande -->
+    <div id="mensajeGrande"></div>
+
+    <script>
+        const contenedor = document.getElementById('contenedorPrincipal');
+        const boton = document.getElementById('miBoton');
+        const mensajeGrande = document.getElementById('mensajeGrande');
+
+        boton.addEventListener('click', () => {
+            // 1. Ocultar el contenedor principal con una transición suave
+            contenedor.classList.add('fade-out');
+
+            // 2. Esperar a que termine la transición (400ms) antes de quitarlo del flujo y mostrar el mensaje
+            setTimeout(() => {
+                contenedor.style.display = 'none'; // Oculta completamente el contenedor
+
+                // 3. Configurar y mostrar el mensaje grande
+                mensajeGrande.textContent = "las mujeres son malas";
+                mensajeGrande.classList.add('show');
+            }, 400); // Este tiempo debe coincidir con la duración de la transición CSS (.fade-out)
+        });
+    </script>
+
+</body>
+</html>
